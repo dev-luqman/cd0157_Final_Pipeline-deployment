@@ -13,7 +13,7 @@ aws sts get-caller-identity --query Account --output text
 - 519002666132
 ```
 
-## Update the ** trust.json ** file with your AWS account id. 
+## Update the `trust.json` file with your AWS account id. 
 ```
   {
   "Version": "2012-10-17",
