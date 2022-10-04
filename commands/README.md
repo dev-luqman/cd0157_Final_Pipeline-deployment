@@ -1,19 +1,19 @@
 # The below commands are use to run the application on aws resourses
 
-## command for creating cluster
+### command for creating cluster
 eksctl create cluster --name eksctl-demo --nodes=2 --version=1.22 --instance-types=t2.medium --region=us-east-2
 
-# Check the status, Nodes should be ready
+### Check the status, Nodes should be ready
 kubectl get nodes
 
-## get aws account user ID 
+### get aws account user ID 
 ```
 aws sts get-caller-identity --query Account --output text
 - Returns the AWS account id similar to 
-- 519002666132
+- 5190026661***
 ```
 
-## Update the `trust.json` file with your AWS account id. 
+### Update the `trust.json` file with your AWS account id. 
 ```
   {
   "Version": "2012-10-17",
@@ -29,23 +29,23 @@ aws sts get-caller-identity --query Account --output text
   }
 ```
 
-## Create an IAM role for codebuild
+### Create an IAM role for codebuild
 ```
 aws iam create-role --role-name UdacityFlaskDeployCBKubectlRole --assume-role-policy-document file://trust.json --output text --query 'Role.Arn'
 ```
 
-## Attach the Policy to the IAM role using the command
+### Attach the Policy to the IAM role using the command
 ```
 aws iam put-role-policy --role-name UdacityFlaskDeployCBKubectlRole --policy-name eks-describe --policy-document file://iam-role-policy.json
 ```
 
-## EKS config file update 
+### EKS config file update 
  __First, get the current ConfigMap and save it to a file:__
  ```
  kubectl get -n kube-system configmap/aws-auth -o yaml > /tmp/aws-auth-patch.yml
  ```
 
-## Edit and save eks config file:
+### Edit and save eks config file:
 code /System/Volumes/Data/private/tmp/aws-auth-patch.yml, _Add the below code block_
 ```
 - groups:
